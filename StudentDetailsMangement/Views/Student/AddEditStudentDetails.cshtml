@@ -1,0 +1,273 @@
+﻿@model StudentDetailsMangement.Models.StudentDetails
+@{
+    ViewBag.Title = "AddStudentDetails";
+}
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<style>
+    .input, input[type="radio"] {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin: 0rem 0rem 1.5rem 0rem;
+        height: 34px;
+    }
+
+    .form-contanier {
+        margin-top: 2rem
+    }
+
+    .btn-algins {
+        margin-right: 7rem
+    }
+
+    label.error {
+        color: red;
+        margin-left: 12rem;
+    }
+</style>
+
+@using (Html.BeginForm("AddEditStudentDetails", "Student", FormMethod.Post, new { @id = "formDetails" }))
+{
+    @Html.HiddenFor(model => model.StudentId)
+    <div class="container">
+        <h3>Create Student Details</h3>
+        <div class="form-contanier">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+
+                    <div class="row">
+                        <label class="col-lg-4 col-xs-4">First Name</label>
+                        @Html.EditorFor(Modal => Modal.FirstName, new { HtmlAttributes = new { @type = "text", @class = "col-lg-7 col-xs-8 input", @placeholder = "Enter Your First Name", @maxlength = "50" } })
+                        @*@Html.ValidationMessageFor(model => model.FisrtName, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="row">
+                        <label class="col-lg-4 col-xs-4">Last Name</label>
+                        @Html.EditorFor(Modal => Modal.LastName, new { HtmlAttributes = new { @type = "text", @class = "col-lg-7 col-xs-8 input", @placeholder = "Enter Your Last Name", @maxlength = "50" } })
+                        @*@Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="row">
+                        <label class="col-lg-4 col-xs-4">Date Of Birth</label>
+                        @Html.EditorFor(Modal => Modal.DateOfBirth, "{0:MM/dd/yyyy}", new { HtmlAttributes = new { @type = "datetime-local", @class = "col-lg-7 col-xs-8 input", @Onchange = "calculateAge()", @id = "DateOfBirth" } })
+                        @*@Html.TextBoxFor(model => model.JoiningDate.ToString("YYYY-MM-DD"), new { @type = "date", @class = "col-lg-7 col-xs-8 input" })*@
+                        @*@Html.ValidationMessageFor(model => model.JoiningDate, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="row">
+                        <label class="col-lg-4 col-xs-4">Age</label>
+                        @Html.EditorFor(Modal => Modal.Age, new { HtmlAttributes = new { @type = "number", @class = "col-lg-7 col-xs-8 input", @placeholder = "Enter Your Age", @maxlength = "3", @id = "Age" } })
+                        @*@Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="row">
+                        <label class="col-lg-4 col-xs-4">Favorite Subject</label>
+                        @Html.DropDownListFor(Modal => Modal.FavoriteSubject, new List<SelectListItem> { new SelectListItem() { Text="---Select Department---", Value=""},
+                                          new SelectListItem { Text="Tamil", Value="Tamil"},
+                                          new SelectListItem { Text="English", Value="English"},
+                                          new SelectListItem { Text="Maths", Value="Maths"},
+                                          new SelectListItem { Text="Science", Value="Science"},
+                                           new SelectListItem { Text="Social", Value="Social"},
+                                  }, new { @class = "col-lg-7 col-xs-8 input" })
+                        @*@Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="row">
+                        <label class="col-lg-4 col-xs-4">Intersted Course</label>
+                        @Html.DropDownListFor(Modal => Modal.InterstedCourse, new List<SelectListItem> { new SelectListItem() { Text="---Select Department---", Value=""},
+                                          new SelectListItem { Text="Maths Biology", Value="Tamil"},
+                                          new SelectListItem { Text="Computer Science", Value="Computer Science"},
+                                          new SelectListItem { Text="Art", Value="Art"},
+                                          new SelectListItem { Text="Pure Science", Value="Pure Science"},
+                                  }, new { @class = "col-lg-7 col-xs-8 input" })
+                        @*@Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="row">
+                        <label class="col-lg-4 col-xs-4">Maths Mark</label>
+                        @Html.EditorFor(Modal => Modal.MathsMark, new { HtmlAttributes = new { @type = "number", @class = "col-lg-7 col-xs-8 input", @placeholder = "Enter Your Maths Mark", @maxlength = "3" } })
+                        @*@Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="row">
+                        <label class="col-lg-4 col-xs-4">Chemistry Mark</label>
+                        @Html.EditorFor(Modal => Modal.ChemistryMark, new { HtmlAttributes = new { @type = "number", @class = "col-lg-7 col-xs-8 input", @placeholder = "Enter Your Chemistry Mark", @maxlength = "3" } })
+                        @*@Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="row">
+                        <label class="col-lg-4 col-xs-4">Computer Science Mark</label>
+                        @Html.EditorFor(Modal => Modal.ComputerScienceMark, new { HtmlAttributes = new { @type = "number", @class = "col-lg-7 col-xs-8 input", @placeholder = "Enter Your Computer Science Mark", @maxlength = "3" } })
+                        @*@Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })*@
+                    </div>
+                    <div class="row" style="text-align:center">
+                        <div class="btn-algins">
+                            <button type="submit" class="btn btn-primary" onclick="SubmitDetails()">Submit</button>
+                            <button type="reset" class="btn btn-default">Reset</button>
+                            <button type="button" class="btn btn-default" onclick="btn()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+    $(function () {
+        debugger;
+        $("#formDetails").validate({
+            rules:
+            {
+                FirstName:
+                {
+                    maxlength: 50,
+                    regex: (/^[A-Za-z]+$/)
+                },
+
+                LastName:
+                {
+                    required: true,
+                    maxlength: 50,
+                    regex: (/^[A-Za-z]+$/)
+                },
+                Age:
+                {
+                    required: true,
+                    maxlength: 3,
+                    regex: "^[1-9]?[0-9]{1}$|^100$"
+
+                },
+                FavoriteSubject:
+                {
+                    required: true,
+                },
+                MathsMark:
+                {
+                    required: true,
+                    maxlength: 3,
+                    regex: "^[1-9]?[0-9]{1}$|^100$"
+                },
+                ChemistryMark:
+                {
+                    required: true,
+                    maxlength: 3,
+                    regex: "^[1-9]?[0-9]{1}$|^100$"
+                },
+                ComputerScienceMark:
+                {
+                    required: true,
+                    maxlength: 3,
+                    regex: "^[1-9]?[0-9]{1}$|^100$"
+                }
+            },
+            messages:
+            {
+
+                FirstName:
+                {
+                    maxlength: "Last Name should be 50 charcter",
+                    regex: "Enter valid Name"
+                },
+                LastName:
+                {
+                    required: "Last Name is required",
+                    maxlength: "Last Name should be 50 charcter",
+                    regex: "Enter valid Name"
+                },
+                age:
+                {
+                    required: "age is required",
+                    maxlength: "age should be 3 digits",
+                    regex: "enter valid mark"
+                },
+                FavoriteSubject:
+                {
+                    required: "Please Select Favorite Subject",
+                },
+                MathsMark:
+                {
+                    required: "Maths Mark is required",
+                    maxlength: "Maths Mark should be 3 digits",
+                    regex: "Enter Valid Mark"
+                },
+                ChemistryMark:
+                {
+                    required: "Chemistry Mark is required",
+                    maxlength: "Chemistry Mark should be 3 digits",
+                    regex: "Enter Valid Mark"
+                },
+                ComputerScienceMark:
+                {
+                    required: "Computer Science Mark is required",
+                    maxlength: "Computer Science Mark should be 3 digits",
+                    regex: "Enter Valid Mark"
+                }
+            }
+        });
+    });
+
+    function calculateAge() {
+        var dateString = $("#DateOfBirth").val();
+        //alert(dateString)
+        var today = new Date();
+        var birthDate = new Date(dateString);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        $('#Age').val(age);
+        if ($('#Age').val() != "") {
+            $('#Age').prop("disabled", true);
+        }
+        else {
+            $('#Age').prop("disabled", false);;
+        }
+    }
+
+
+    function SubmitDetails() {
+        if ($("#formDetails").valid()) {
+            $("#formDetails").submit();
+        }
+    }
+</script>
+
+@*<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600' rel='stylesheet' type='text/css'>
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
+<link href="~/styles/AddEditStudentDetails.css" rel="stylesheet" />
+
+<div class="testbox">
+    <h1>Registration</h1>
+
+    @using (Html.BeginForm("AddEditStudentDetails", "Student", FormMethod.Post, new { @id = "formDetails" }))
+    {
+        @Html.HiddenFor(model => model.StudentId)
+        <hr>
+
+        <label class="col-lg-4 col-xs-4">First Name</label>
+        @Html.EditorFor(Modal => Modal.FirstName, new { HtmlAttributes = new { @type = "text", @placeholder = "First Name" } })
+        <div class="accounttype">
+            <input type="radio" value="None" id="radioOne" name="account" checked />
+            <label for="radioOne" class="radio" chec>Personal</label>
+            <input type="radio" value="None" id="radioTwo" name="account" />
+            <label for="radioTwo" class="radio">Company</label>
+        </div>
+
+        <hr>
+
+        <label id="icon" for="name"><i class="icon-envelope "></i></label>
+        <input type="text" name="name" id="name" placeholder="Email" required />
+
+        <label id="icon" for="name"><i class="icon-user"></i></label>
+        <input type="text" name="name" id="name" placeholder="Name" required />
+
+        <label id="icon" for="name"><i class="icon-shield"></i></label>
+        <input type="password" name="name" id="name" placeholder="Password" required />
+
+        <div class="gender">
+            <input type="radio" value="None" id="male" name="gender" checked />
+            <label for="male" class="radio" chec>Male</label>
+            <input type="radio" value="None" id="female" name="gender" />
+            <label for="female" class="radio">Female</label>
+        </div>
+
+
+        <a href="#" class="button">Register</a>
+    }
+</div>*@

@@ -1,0 +1,212 @@
+﻿@model IEnumerable<StudentDetailsMangement.Models.StudentDetails>
+
+@{
+    ViewBag.Title = "ViewStudentDetails";
+}
+
+<script>
+    function AddStudentDetails()
+    {
+        window.location.href = "@Url.Action("AddStudentDetails", "Student")";
+    }
+
+    function DeleteStudentDetails(id)
+    {
+        window.location.href = "@Url.Action("DeleteStudentDetails", "Student")?Id=" + id;
+
+    }
+
+    function EditStudentDetails(id)
+    {
+            window.location.href = "@Url.Action("EditStudentDetails", "Student")?Id=" + id;
+    }
+</script>
+
+@if (TempData["LoginAlert"] != null)
+{
+    <script>
+        alert("@Html.Raw(@TempData["LoginAlert"].ToString())");
+    </script>
+
+}
+
+
+@if (TempData["CreateAlert"] != null)
+{
+    <script>
+        alert("@Html.Raw(@TempData["CreateAlert"].ToString())");
+    </script>
+}
+
+@if (TempData["DeleteAlert"] != null)
+{
+    <script>
+        alert("@Html.Raw(@TempData["DeleteAlert"].ToString())");
+    </script>
+}
+@if (TempData["EditAlert"] != null)
+{
+    <script>
+        alert("@Html.Raw(@TempData["EditAlert"].ToString())");
+    </script>
+}
+<style>
+    #add_button {
+        margin: 10px 10px 10px 10px;
+        float: right;
+    }
+
+    .table-primary {
+        background: #6807f9;
+    }
+
+    .btn-primary {
+        background: #6807f9;
+    }
+
+    thead tr td {
+        border: none;
+        padding: 30px;
+        font-size: 14px;
+        color: #fff;
+    }
+  
+</style>
+
+<body>
+  <div class="container">
+    <h1 class="text-center mb-4">Student Detail List</h1>
+    
+        <button type="button" class="btn btn-primary btn-sm " id="add_button" onclick="AddStudentDetails()"> Add Student </button>
+    
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="table-wrap">
+                <table class="table table-bordered table-striped">
+
+                    <thead class="table-primary">
+                        <tr>
+                            <td>First Name</td>
+                            <td>Last Name</td>
+                            <td>DOB</td>
+                            <td>Age</td>
+                            <td>Fav-Subject</td>
+                            <td>InterstedCourse</td>
+                            <td>Maths</td>
+                            <td>Chemistry</td>
+                            <td>Computer</td>
+                            <td></td>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model != null)
+                        {
+
+                            foreach (var items in Model)
+                            {
+                                <tr>
+                                    <td>@items.FirstName</td>
+                                    <td>@items.LastName </td>
+                                    <td>@items.DateOfBirth</td>
+                                    <td>@items.Age</td>
+                                    <td>@items.FavoriteSubject</td>
+                                    <td>@items.InterstedCourse</td>
+                                    <td>@items.MathsMark</td>
+                                    <td>@items.ChemistryMark</td>
+                                    <td>@items.ComputerScienceMark</td>
+                                    <td>
+                                        <button class="btn btn-success" type="button" id="@items.StudentId" onclick="EditStudentDetails(this.id)">Edit</button>
+                                        <button class="btn btn-danger" type="button" id="@items.StudentId" onclick="DeleteStudentDetails(this.id)">delete</button>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+
+                        else
+                        {
+                            <tr>
+                                <td colspan="7">No Record Found</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+<!--<div class="container">
+
+    <h2>Display Student Details</h2>
+    <div class="row">
+        <button type="button" class="btn btn-primary btn-sm " id="add_button" onclick="AddStudentDetails()"> Add Student </button>
+        </div>
+    <div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>DOB</td>
+                <td>Age</td>
+                <td>FavoriteSubject</td>
+                <td>InterstedCourse</td>
+                <td>MathsMark</td>
+                <td>ChemistryMark</td>
+                <td>ComputerScienceMark</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>-->
+@*@if (Model != null)
+    {
+
+        foreach (var items in Model)
+        {
+            <tr>
+                <td>@items.FirstName</td>
+                <td>@items.LastName </td>
+                <td>@items.DateOfBirth</td>
+                <td>@items.Age</td>
+                <td>@items.FavoriteSubject</td>
+                <td>@items.InterstedCourse</td>
+                <td>@items.MathsMark</td>
+                <td>@items.ChemistryMark</td>
+                <td>@items.ComputerScienceMark</td>
+                <td>
+                    <button class="btn btn-success" type="button" id="@items.StudentId" onclick="EditStudentDetails(this.id)">Edit</button>
+                <!--</td>
+                <td>
+                    <button class="btn btn-danger" type="button" id=" @items.StudentId " onclick="DeleteStudentDetails(this.id)">delete</button>
+                </td>-->*@
+@*@using (Html.BeginForm("EditUserDetails", "Home", new { Id = items.StudentID }, FormMethod.Post))
+    {
+        <button class="btn btn-success">Edit</button>
+    }*@
+@*<td>
+    @using (Html.BeginForm("DeleteUserDetails", "Home", new { Id = items.StudentID }, FormMethod.Post))
+    {
+        <button class="btn btn-danger">DELETE</button>
+    }
+                        </td>*@
+<!--</tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7">No Record Found</td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+</div>
+</div>-->
